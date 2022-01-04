@@ -17,7 +17,7 @@ def run_game():
             if event.type == pygame.QUIT:
                 sys.exit()
     
-    #Refreshing screen in every iteration of loop
+    # Refreshing screen in every iteration of loop
     screen.fill(bg_color)
 
     # Displaing last modyfid screen
