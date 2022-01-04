@@ -7,7 +7,8 @@ def run_game():
     pygame.init()
     screen = pygame.display.set_mode((1200, 800))
     pygame.display.set_caption('Space invazion!')
-
+    # Background color
+    bg_color = (230, 230, 230)
     # Main loop start
     while True:
 
@@ -16,6 +17,9 @@ def run_game():
             if event.type == pygame.QUIT:
                 sys.exit()
     
+    #Refreshing screen in every iteration of loop
+    screen.fill(bg_color)
+
     # Displaing last modyfid screen
     pygame.display.flip()
 
