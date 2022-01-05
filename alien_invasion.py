@@ -18,12 +18,6 @@ def run_game():
     # Main loop start
     while True:
         gf.check_events()
-    
-        # Refreshing screen in every iteration of loop
-        screen.fill(ai_settings.bg_color)
-        ship.blitme
-
-        # Displaing last modyfid screen
-        pygame.display.flip()
+        gf.update_screen(ai_settings, screen, ship)
 
 run_game()        
