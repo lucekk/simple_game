@@ -24,11 +24,11 @@ def run_game():
             if event.type == pygame.QUIT:
                 sys.exit()
     
-    # Refreshing screen in every iteration of loop
-    screen.fill(ai_settings.bg_color)
-    ship.blitme
+        # Refreshing screen in every iteration of loop
+        screen.fill(ai_settings.bg_color)
+        ship.blitme
 
-    # Displaing last modyfid screen
-    pygame.display.flip()
+        # Displaing last modyfid screen
+        pygame.display.flip()
 
 run_game()        
