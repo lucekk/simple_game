@@ -3,6 +3,7 @@ import sys
 import pygame
 
 from settings import Settings
+from ship import Ship
 
 def run_game():
     # Initializing the game and making screen object.
@@ -11,6 +12,8 @@ def run_game():
     screen = pygame.display.set_mode(
         (ai_settings.screen_width, ai_settings.screen_height))
     pygame.display.set_caption('Space invazion!')
+    # MAking space ship
+    ship = Ship(screen)
     # Background color
     bg_color = (230, 230, 230)
     # Main loop start
@@ -23,6 +26,7 @@ def run_game():
     
     # Refreshing screen in every iteration of loop
     screen.fill(ai_settings.bg_color)
+    ship.blitme
 
     # Displaing last modyfid screen
     pygame.display.flip()
