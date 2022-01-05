@@ -15,6 +15,13 @@ class Ship():
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
 
+        #Spaceship moveing
+        self.moving_right = False
+
+    def update(self):
+        if self.moving_right:
+            self.rect.centerx += 1
+
     def blitme(self):
         '''Displaing space ship in actual position'''
         self.screen.blit(self.image, self.rect)
