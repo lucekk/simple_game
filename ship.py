@@ -2,9 +2,10 @@ import pygame
 
 class Ship():
 
-    def __init__(self, screen):
+    def __init__(self, ai_settings, screen):
         '''Inizalizing space ship and its position'''
         self.screen = screen
+        self.ai_settings = ai_settings
 
         # Space ship loading, downloading its rectangle
         self.image = pygame.image.load('images/ship.bmp')
@@ -15,12 +16,24 @@ class Ship():
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
 
-        #Spaceship moveing
+        # Center point of spaceship is float
+        self.center = float(self.rect.centerx)
+
+        # Spaceship moveing
         self.moving_right = False
+        self.moving_left = False
+
+        # Spaceship setup
+        self.ship_speed_factor = 1.5
 
     def update(self):
         if self.moving_right:
-            self.rect.centerx += 1
+            self.rect.centerx += self.ai_settings.ship_speed_factor
+        if self.moving_left:
+            self.rect.centerx -= self.ai_settings.ship_speed_factor
+
+        # Updateing rect object due to self.center
+        self.rect.centerx = self.center
 
     def blitme(self):
         '''Displaing space ship in actual position'''
