@@ -1,5 +1,5 @@
 class Settings():
-    '''CLass for game settings'''
+    '''Class for game settings'''
 
     def __init__(self):
         '''Inizalizing game setings'''
@@ -10,3 +10,5 @@ class Settings():
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_color = 60, 60, 60
+        self.bullets_alowed = 3
+         
