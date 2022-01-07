@@ -29,4 +29,4 @@ class Bullet(Sprite):
 
     def draw_bullet(self):
         '''Displaing bullet'''
-        pygame.draw.rect(self.screen, sel.color, self,rect)
+        pygame.draw.rect(self.screen, self.color, self.rect)
