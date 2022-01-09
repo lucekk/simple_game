@@ -1,6 +1,7 @@
 import sys
 import pygame
 from bullet import Bullet
+from alien import Alien
 
 def check_keydown_events(event, ai_settings, screen, ship, bullets):
     '''Key push reaction'''
@@ -12,10 +13,23 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
         fire_bullet(ai_settings, screen, ship, bullets)
     elif event.key == pygame.K_q:
         sys.exit()  
-        
-        if len(bullets) < ai_settings.bullets_allowed:
-            new_bullet = Bullet(ai_settings, screen, ship)
-            bullets.add(new_bullet)
+
+def  create_fleet(ai_settings, screen, aliens):
+    '''Making a fleet'''
+    # Single alien
+    alien = Alien(ai_settings, screen)
+    # Positions on screen
+    alien_width = alien.rect.width
+    avaible_space_x = ai_settings.screen_width - 2 * alien_width
+    nuber_aliens_x = int(avaible_space_x / (2 * alien_nuber))
+
+    #first row of aliens
+    for alien_number in range(nuber_aliens_x):
+        # Making aline in puting in the row
+        alien = Alien(ai_settings, screen)
+        alien.x = alien_width + 2 * alien_width * alien_number
+        alien.rect.x = alien.x
+        aliens.add(alien)
 
 def fire_bullet(ai_settings, screen, ship, bullets):
     '''Fire bullet if its allowed''' 
@@ -53,7 +67,7 @@ def update_bullets(bullets):
             bullets.remove(bullet)
         print(len(bullets))
 
-def update_screen(ai_settings, screen, ship, bullets):
+def update_screen(ai_settings, screen, ship, aliens, bullets):
     '''Updating/Changing screens'''
     # Refreshing screen in every iteration of loop
     screen.fill(ai_settings.bg_color)
@@ -62,6 +76,7 @@ def update_screen(ai_settings, screen, ship, bullets):
         bullet.draw_bullet()
         
     ship.blitme
+    aliens.draw(screen)
 
     # Displaing last modyfid screen
     pygame.display.flip()

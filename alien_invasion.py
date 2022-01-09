@@ -16,13 +16,15 @@ def run_game():
     ship = Ship(ai_settings, screen)
     # Group to contein bullets
     bullets = Group()
-    # Background color
-    bg_color = (230, 230, 230)
+    # Group to contein aliens
+    aliens = Group()
+    gf.create_fleet(ai_settings, screen, aliens)
+
     # Main loop start
     while True:
         gf.check_events(ai_settings, screen, ship, bullets)
         ship.update()
         gf.update_bullets(bullets)
-        gf.update_screen(ai_settings, screen, ship, bullets)
+        gf.update_screen(ai_settings, screen, ship, aliens, bullets)
 
 run_game()        
