@@ -17,7 +17,7 @@ class Bullet(Sprite):
         # Bullet position defined by float
         self.y = float(self.rect.y)
 
-        self.color = ai_settings.bullet_collor
+        self.color = ai_settings.bullet_color
         self.speed_factor = ai_settings.bullet_speed_factor
     
     def update(self):

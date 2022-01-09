@@ -21,10 +21,10 @@ def  create_fleet(ai_settings, screen, aliens):
     # Positions on screen
     alien_width = alien.rect.width
     avaible_space_x = ai_settings.screen_width - 2 * alien_width
-    nuber_aliens_x = int(avaible_space_x / (2 * alien_width))
+    number_aliens_x = int(avaible_space_x / (2 * alien_width))
 
     #first row of aliens
-    for alien_number in range(nuber_aliens_x):
+    for alien_number in range(number_aliens_x):
         # Making aline in puting in the row
         alien = Alien(ai_settings, screen)
         alien.x = alien_width + 2 * alien_width * alien_number
@@ -75,7 +75,7 @@ def update_screen(ai_settings, screen, ship, aliens, bullets):
     for bullet in bullets.sprites():
         bullet.draw_bullet()
         
-    ship.blitme
+    ship.blitme()
     aliens.draw(screen)
 
     # Displaing last modyfid screen
