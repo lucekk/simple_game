@@ -45,7 +45,7 @@ def  create_fleet(ai_settings, screen, ship, aliens):
     # Single alien
     alien = Alien(ai_settings, screen)
     number_aliens_x = get_number_aliens_x(ai_settings, alien.rect.width)
-    number_rows = get_number_rows(ai_settings, ship.rect.hight, alien.rect.higt)
+    number_rows = get_number_rows(ai_settings, ship.rect.height, alien.rect.heigt)
     # Whole fleet
     for row_number in range(number_rows):
         for alien_number in range(number_aliens_x):
