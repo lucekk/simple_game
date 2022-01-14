@@ -97,7 +97,7 @@ def update_aliens(ai_settings, aliens):
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
 
-def update_bullets(bullets):
+def update_bullets(aliens, bullets):
     '''Updating positions of bullets and deleting out of range bullets'''
     # Updating bullets position
     bullets.update()
@@ -108,7 +108,7 @@ def update_bullets(bullets):
             bullets.remove(bullet)
         print(len(bullets))
     
-    # Checking collisons wirh aliens
+    # Checking collisons wirh aliens and removing destroyed alien
     collisions = pygame.sprite.groupcollide(bullet, aliens, True, True)
 
 def update_screen(ai_settings, screen, ship, aliens, bullets):
