@@ -38,4 +38,4 @@ class Ship():
 
     def center_ship(self):
         '''Center ship on the bottom of screen'''
-        self.center = self.screen_rect.centrex
+        self.center = self.screen_rect.centerx
