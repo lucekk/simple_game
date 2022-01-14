@@ -2,8 +2,10 @@ from ast import alias
 from re import A
 from ssl import ALERT_DESCRIPTION_DECOMPRESSION_FAILURE
 import sys
+from xmlrpc.client import TRANSPORT_ERROR
 from matplotlib.pyplot import get
 from numpy import number
+import py
 import pygame
 from bullet import Bullet
 from alien import Alien
@@ -77,6 +79,24 @@ def check_events(ai_settings, screen, ship, bullets):
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
 
+def check_fleet_edges(ai_settings, aliens):
+    '''Alien-edge reaction'''
+    for alien in aliens.sprites():
+        if alien.check_edges():
+            change_fleet_direction(ai_settings, aliens)
+            break
+
+def change_fleet_direction(ai_settings, aliens):
+    '''Getting whole fleet step down and change direction'''
+    for alien in aliens.sprites():
+        alien.rect.y += ai_settings.fleet_drop.speed
+    ai_settings.fleet_direction *= -1
+
+def update_aliens(ai_settings, aliens):
+    '''Checking and updating postions of the aliens'''
+    check_fleet_edges(ai_settings, aliens)
+    aliens.update()
+
 def update_bullets(bullets):
     '''Updating positions of bullets and deleting out of range bullets'''
     # Updating bullets position
@@ -87,6 +107,9 @@ def update_bullets(bullets):
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
         print(len(bullets))
+    
+    # Checking collisons wirh aliens
+    collisions = pygame.sprite.groupcollide(bullet, aliens, True, True)
 
 def update_screen(ai_settings, screen, ship, aliens, bullets):
     '''Updating/Changing screens'''
