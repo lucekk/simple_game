@@ -1,4 +1,9 @@
+from ast import alias
+from re import A
+from ssl import ALERT_DESCRIPTION_DECOMPRESSION_FAILURE
 import sys
+from matplotlib.pyplot import get
+from numpy import number
 import pygame
 from bullet import Bullet
 from alien import Alien
@@ -14,22 +19,38 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
     elif event.key == pygame.K_q:
         sys.exit()  
 
-def  create_fleet(ai_settings, screen, aliens):
+def get_number_rows(ai_settings, ship_height, alien_height):
+    '''How many aliens rows culd be on the screen'''
+    avalible_space_y = (ai_settings.screen_height - (3 * alien_height) - ship_height)
+    number_rows = int(avalible_space_y / (2 * alien_height))
+    return number_rows
+
+def get_number_aliens_x(ai_settings, alien_width):
+    '''How many aliens could be in the row'''
+    avaible_space_x = ai_settings.screen_width - 2 * alien_width
+    number_aliens_x = int(avaible_space_x / (2 * alien_width))
+    return number_aliens_x
+
+def create_alien(ai_settings, screen, aliens, alien_number, row_number):
+    # Making aline in puting in the row
+        alien = Alien(ai_settings, screen)
+        alien_width = alien.rect.width
+        alien.x = alien_width + 2 * alien_width * alien_number
+        alien.rect.x = alien.x
+        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
+        aliens.add(alien)
+
+def  create_fleet(ai_settings, screen, ship, aliens):
     '''Making a fleet'''
     # Single alien
     alien = Alien(ai_settings, screen)
-    # Positions on screen
-    alien_width = alien.rect.width
-    avaible_space_x = ai_settings.screen_width - 2 * alien_width
-    number_aliens_x = int(avaible_space_x / (2 * alien_width))
+    number_aliens_x = get_number_aliens_x(ai_settings, alien.rect.width)
+    number_rows = get_number_rows(ai_settings, ship.rect.hight, alien.rect.higt)
+    # Whole fleet
+    for row_number in range(number_rows):
+        for alien_number in range(number_aliens_x):
+            create_alien(ai_settings, screen, aliens, alien_number, row_number)
 
-    #first row of aliens
-    for alien_number in range(number_aliens_x):
-        # Making aline in puting in the row
-        alien = Alien(ai_settings, screen)
-        alien.x = alien_width + 2 * alien_width * alien_number
-        alien.rect.x = alien.x
-        aliens.add(alien)
 
 def fire_bullet(ai_settings, screen, ship, bullets):
     '''Fire bullet if its allowed''' 

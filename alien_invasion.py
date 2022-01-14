@@ -18,7 +18,7 @@ def run_game():
     bullets = Group()
     # Group to contein aliens
     aliens = Group()
-    gf.create_fleet(ai_settings, screen, aliens)
+    gf.create_fleet(ai_settings, screen, ship, aliens)
 
     # Main loop start
     while True:
