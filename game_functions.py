@@ -10,6 +10,8 @@ import pygame
 from bullet import Bullet
 from alien import Alien
 
+
+
 def check_keydown_events(event, ai_settings, screen, ship, bullets):
     '''Key push reaction'''
     if event.key == pygame.K_RIGHT:
@@ -21,17 +23,23 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
     elif event.key == pygame.K_q:
         sys.exit()  
 
+
+
 def get_number_rows(ai_settings, ship_height, alien_height):
     '''How many aliens rows culd be on the screen'''
     avalible_space_y = (ai_settings.screen_height - (3 * alien_height) - ship_height)
     number_rows = int(avalible_space_y / (2 * alien_height))
     return number_rows
 
+
+
 def get_number_aliens_x(ai_settings, alien_width):
     '''How many aliens could be in the row'''
     avaible_space_x = ai_settings.screen_width - 2 * alien_width
     number_aliens_x = int(avaible_space_x / (2 * alien_width))
     return number_aliens_x
+
+
 
 def create_alien(ai_settings, screen, aliens, alien_number, row_number):
     # Making aline in puting in the row
@@ -41,6 +49,8 @@ def create_alien(ai_settings, screen, aliens, alien_number, row_number):
         alien.rect.x = alien.x
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         aliens.add(alien)
+
+
 
 def  create_fleet(ai_settings, screen, ship, aliens):
     '''Making a fleet'''
@@ -54,6 +64,7 @@ def  create_fleet(ai_settings, screen, ship, aliens):
             create_alien(ai_settings, screen, aliens, alien_number, row_number)
 
 
+
 def fire_bullet(ai_settings, screen, ship, bullets):
     '''Fire bullet if its allowed''' 
     # Creating new bullet and adding it to the group
@@ -62,12 +73,15 @@ def fire_bullet(ai_settings, screen, ship, bullets):
         bullets.add(new_bullet)
 
 
+
 def check_keyup_events(event, ship):
     '''Key free reaction'''        
     if event.key == pygame.K_RIGHT:
         ship.moving_right = False
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False   
+
+
 
 def check_events(ai_settings, screen, ship, bullets):
     '''controling'''
@@ -79,6 +93,8 @@ def check_events(ai_settings, screen, ship, bullets):
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
 
+
+
 def check_fleet_edges(ai_settings, aliens):
     '''Alien-edge reaction'''
     for alien in aliens.sprites():
@@ -86,18 +102,26 @@ def check_fleet_edges(ai_settings, aliens):
             change_fleet_direction(ai_settings, aliens)
             break
 
+
+
 def change_fleet_direction(ai_settings, aliens):
     '''Getting whole fleet step down and change direction'''
     for alien in aliens.sprites():
-        alien.rect.y += ai_settings.fleet_drop.speed
+        alien.rect.y += ai_settings.fleet_drop_speed
     ai_settings.fleet_direction *= -1
 
-def update_aliens(ai_settings, aliens):
+
+
+def update_aliens(ai_settings, ship, aliens):
     '''Checking and updating postions of the aliens'''
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
+    # Detecting alien-ship colison
+    if pygame.sprite.spritecollideany(ship, aliens):
+        print ('Bagniak Cię dopadł! :C')
 
-def update_bullets(aliens, bullets):
+
+def update_bullets(ai_settings, screen, ship, aliens, bullets):
     '''Updating positions of bullets and deleting out of range bullets'''
     # Updating bullets position
     bullets.update()
@@ -108,8 +132,19 @@ def update_bullets(aliens, bullets):
             bullets.remove(bullet)
         print(len(bullets))
     
+    check_bullet_alien_colissions(ai_settings, screen, ship, aliens, bullets)
+
+
+
+def check_bullet_alien_colissions(ai_settings, screen, ship, aliens, bullets):
     # Checking collisons wirh aliens and removing destroyed alien
-    collisions = pygame.sprite.groupcollide(bullet, aliens, True, True)
+    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    if len(aliens) == 0:
+        # New fleet without old bullets
+        bullets.empty()
+        create_fleet(ai_settings, screen, ship, aliens)
+
+
 
 def update_screen(ai_settings, screen, ship, aliens, bullets):
     '''Updating/Changing screens'''
