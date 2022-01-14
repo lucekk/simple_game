@@ -114,17 +114,19 @@ def change_fleet_direction(ai_settings, aliens):
 
 def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
     # Reaction alien-ship collision
-    stats.ship_left -= 1
-    #Deleting contests of lists aleiens and bullets
-    aliens.empty()
-    bullets.empty()
-
-    # New fleet
-    create_fleet(ai_settings, screen, ship, aliens)
-    ship.center_ship()
-
-    # Stop
-    sleep(0.5)
+    if stats.ships_left > 0:
+        stats.ship_left -= 1
+        #Deleting contests of lists aleiens and bullets
+        aliens.empty()
+        bullets.empty()
+        # New fleet
+        create_fleet(ai_settings, screen, ship, aliens)
+        ship.center_ship()
+         # Stop
+        sleep(0.5)
+    else:
+        stats.game_active = False
+   
 
 def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
     '''Checking and updating postions of the aliens'''
