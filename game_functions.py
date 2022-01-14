@@ -2,6 +2,7 @@ from ast import alias
 from re import A
 from ssl import ALERT_DESCRIPTION_DECOMPRESSION_FAILURE
 import sys
+from time import sleep
 from xmlrpc.client import TRANSPORT_ERROR
 from matplotlib.pyplot import get
 from numpy import number
@@ -111,13 +112,27 @@ def change_fleet_direction(ai_settings, aliens):
     ai_settings.fleet_direction *= -1
 
 
+def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
+    # Reaction alien-ship collision
+    stats.ship_left -= 1
+    #Deleting contests of lists aleiens and bullets
+    aliens.empty()
+    bullets.empty()
 
-def update_aliens(ai_settings, ship, aliens):
+    # New fleet
+    create_fleet(ai_settings, screen, ship, aliens)
+    ship.center_ship()
+
+    # Stop
+    sleep(0.5)
+
+def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
     '''Checking and updating postions of the aliens'''
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
     # Detecting alien-ship colison
     if pygame.sprite.spritecollideany(ship, aliens):
+        ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
         print ('Bagniak Cię dopadł! :C')
 
 
