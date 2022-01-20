@@ -84,20 +84,20 @@ def check_keyup_events(event, ship):
 
 
 
-def check_events(ai_settings, stats, screen, ship, bullets, play_button, aliens):
+def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets):
     '''controling'''
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_bitton(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y)
+            check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y)
         elif event.type == pygame.KEYDOWN:
             check_keydown_events(event, ai_settings, screen, ship, bullets)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
 
-def check_play_button(ai_settings, stats, play_button, mouse_x, mouse_y, ship, screen, aliens, bullets):
+def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y):
     '''Starting new game after pressing button and resetings after old game'''
     button_cliked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_cliked and not stats.game_active:
@@ -130,7 +130,7 @@ def change_fleet_direction(ai_settings, aliens):
 
 def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
     # Reaction alien-ship collision
-    if stats.ships_left > 0:
+    if stats.ship_left > 0:
         stats.ship_left -= 1
         #Deleting contests of lists aleiens and bullets
         aliens.empty()
