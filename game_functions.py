@@ -155,7 +155,7 @@ def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
         print ('Bagniak Cię dopadł! :C')
 
 
-def update_bullets(ai_settings, screen, ship, aliens, bullets):
+def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
     '''Updating positions of bullets and deleting out of range bullets'''
     # Updating bullets position
     bullets.update()
@@ -165,13 +165,16 @@ def update_bullets(ai_settings, screen, ship, aliens, bullets):
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
     
-    check_bullet_alien_colissions(ai_settings, screen, ship, aliens, bullets)
+    check_bullet_alien_colissions(ai_settings, screen, stats, sb, ship, aliens, bullets)
 
 
 
-def check_bullet_alien_colissions(ai_settings, screen, ship, aliens, bullets):
+def check_bullet_alien_colissions(ai_settings, screen, stats, sb, ship, aliens, bullets):
     # Checking collisons wirh aliens and removing destroyed alien
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    if collisions:
+        stats.score += ai_settings.alien_points * len(aliens)
+        sb.prep_score
     if len(aliens) == 0:
         # New fleet without old bullets
         bullets.empty()
@@ -180,7 +183,7 @@ def check_bullet_alien_colissions(ai_settings, screen, ship, aliens, bullets):
 
 
 
-def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button):
+def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_button):
     '''Updating/Changing screens'''
     # Refreshing screen in every iteration of loop
     screen.fill(ai_settings.bg_color)
@@ -190,6 +193,7 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button
         
     ship.blitme()
     aliens.draw(screen)
+    sb.show_score()
 
     # Displaing button only if game is inactive
 

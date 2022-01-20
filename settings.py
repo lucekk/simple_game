@@ -18,6 +18,7 @@ class Settings():
         # value of fleet-direction - 1 means right, -1 means left
         self.fleet_direction = 1
         self.speedip_scale = 1.1
+        self.alien_points = 50
 
         self.initialize_dynamic_settings()
 
@@ -27,6 +28,7 @@ class Settings():
         self.bullet_speed_factor = 2
         self.alien_speed_factor = 1
         self.fleet_direction = 1
+        self.alien_points = 50
 
     def increase_speed(self):
         '''New speeds'''
