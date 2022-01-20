@@ -99,7 +99,9 @@ def check_events(ai_settings, stats, screen, ship, bullets, play_button, aliens)
 
 def check_play_button(ai_settings, stats, play_button, mouse_x, mouse_y, ship, screen, aliens, bullets):
     '''Starting new game after pressing button and resetings after old game'''
-    if play_button.rect.collidepoint(mouse_x, mouse_y):
+    button_cliked = play_button.rect.collidepoint(mouse_x, mouse_y)
+    if button_cliked and not stats.game_active:
+        pygame.mouse.set_visible(False)
         stats.reset_stats()
         stats.game_active = True
         aliens.empty()
@@ -138,6 +140,7 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
         sleep(0.5)
     else:
         stats.game_active = False
+        pygame.mouse.set_visible(True)
    
 
 def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
