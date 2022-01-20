@@ -18,6 +18,7 @@ class Settings():
         # value of fleet-direction - 1 means right, -1 means left
         self.fleet_direction = 1
         self.speedip_scale = 1.1
+        self.score_scale = 1.5
         self.alien_points = 50
 
         self.initialize_dynamic_settings()
@@ -35,3 +36,4 @@ class Settings():
         self.ship_speed_factor *= self.speedip_scale
         self.bullet_speed_factor *= self.speedip_scale
         self.alien_speed_factor *= self.speedip_scale
+        self.alien_points = int(self.alien_points * self.score_scale)
