@@ -19,7 +19,7 @@ class Scoreboard():
         self.prep_score()
         self.prep_high_score()
         self.prep_level()
-        self.prep_ship
+        self.prep_ships()
 
     def prep_score(self):
         '''points to rendered image'''
@@ -45,7 +45,7 @@ class Scoreboard():
         self.high_score_image = self.font.render(high_score_str, True, self.text_color, self.ai_settings.bg_color)
 
         # High score position
-        self.high_score_rect = self.high_score_rect.get_rect()
+        self.high_score_rect = self.high_score_image.get_rect()
         self.high_score_rect.centerx = self.screen_rect.centerx
         self.high_score_rect.top = self.score_rect.top
 
@@ -58,11 +58,11 @@ class Scoreboard():
         self.level_rect.right = self.score_rect.right
         self.level_rect.top = self.score_rect.bottom + 10
 
-    def prep_ship(self):
+    def prep_ships(self):
         ''' Number of spaceships left'''
         self.ships = Group()
-        for ship_number in range(self.stats.ship_left):
+        for ship_number in range(self.stats.ships_left):
             ship = Ship(self.ai_settings, self.screen)
             ship.rect.x = 10 + ship_number * ship.rect.width
             ship.rect.y = 10
-            self.sfhip.add(ship)
+            self.ships.add(ship)

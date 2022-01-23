@@ -111,7 +111,7 @@ def check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens,
        
         # Clear scoreboard
         sb.prep_score()
-        sb.prep_high_Score()
+        sb.prep_high_score()
         sb.prep_level()
         sb.prep_ships()
        
@@ -142,10 +142,10 @@ def check_high_score(stats, sb):
         sb.prep_high_score()
 
 
-def ship_hit(ai_settings, stats,sb,  screen, ship, aliens, bullets):
+def ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets):
     # Reaction alien-ship collision
-    if stats.ship_left > 0:
-        stats.ship_left -= 1
+    if stats.ships_left > 0:
+        stats.ships_left -= 1
         sb.prep_ships()
         #Deleting contests of lists aleiens and bullets
         aliens.empty()
@@ -160,18 +160,18 @@ def ship_hit(ai_settings, stats,sb,  screen, ship, aliens, bullets):
         pygame.mouse.set_visible(True)
    
 
-def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
+def update_aliens(ai_settings, stats, sb, screen, ship, aliens, bullets):
     '''Checking and updating postions of the aliens'''
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
     # Detecting alien-ship colison
     if pygame.sprite.spritecollideany(ship, aliens):
-        ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+        ship_hit(ai_settings, stats, sb, screen, ship, aliens, bullets)
         print ('Bagniak Cię dopadł! :C')
 
 def check_alien_bottom(ai_settings, screen, stats, sb ,ship, aliens, bullets):
     '''Chcecking alien gets bottom of the screen'''
-    screen_rect = screen_rect.get_rect()
+    screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
             ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets)
