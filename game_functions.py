@@ -162,12 +162,14 @@ def ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets):
 
 def update_aliens(ai_settings, stats, sb, screen, ship, aliens, bullets):
     '''Checking and updating postions of the aliens'''
+    check_alien_bottom(ai_settings, stats, sb, screen ,ship, aliens, bullets)
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
     # Detecting alien-ship colison
     if pygame.sprite.spritecollideany(ship, aliens):
         ship_hit(ai_settings, stats, sb, screen, ship, aliens, bullets)
         print ('Bagniak Cię dopadł! :C')
+
 
 def check_alien_bottom(ai_settings, screen, stats, sb ,ship, aliens, bullets):
     '''Chcecking alien gets bottom of the screen'''
